@@ -6,6 +6,93 @@ using System.Threading.Tasks;
 
 namespace C_Practica
 {
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Примеры работы с классом Fraction
+            Fraction fraction1 = new Fraction(1, 2);
+            Fraction fraction2 = new Fraction(3, 4);
+
+            Console.WriteLine($"Дробь 1: {fraction1}");
+            Console.WriteLine($"Дробь 2: {fraction2}");
+
+            // Сложение дробей
+            Console.WriteLine($"Сумма: {fraction1 + fraction2}");
+
+            // Вычитание дробей
+            Console.WriteLine($"Разность: {fraction1 - fraction2}");
+
+            // Деление дробей
+            Console.WriteLine($"Деление: {fraction1 / fraction2}");
+
+            // Умножение дробей
+            Console.WriteLine($"Умножение: {fraction1 * fraction2}");
+
+            // Инкремент дроби
+            Console.WriteLine($"Инкремент: {fraction1++}");
+
+            // Декремент дроби
+            Console.WriteLine($"Декремент: {fraction1--}");
+
+            // Изменение знака дроби
+            Console.WriteLine($"Изменение знака: {-fraction1}");
+
+            // Получение целой части дроби
+            Console.WriteLine($"Целая часть: {Fraction.GetWholePart(fraction1)}");
+
+            // Получение числителя и знаменателя по индексу
+            Console.WriteLine($"Числитель дроби 1: {fraction1[0]}");
+            Console.WriteLine($"Знаменатель дроби 2: {fraction1[1]}");
+
+            // Сравнение дробей
+            Console.WriteLine($"Равны ли дробь 1 и дробь 2? {fraction1.Equals(fraction2)}");
+
+
+            // Примеры работы с классом Complex
+            Complex complex1 = new Complex(2, 3);
+            Complex complex2 = new Complex(1, 4);
+
+            Console.WriteLine($"\n\nКомплексное число 1: {complex1}");
+            Console.WriteLine($"Комплексное число 2: {complex2}");
+
+            // Сложение комплексных чисел
+            Console.WriteLine($"Сумма: {complex1 + complex2}");
+
+            // Вычитание комплексных чисел
+            Console.WriteLine($"Разность: {complex1 - complex2}");
+
+            // Умножение комплексных чисел
+            Console.WriteLine($"Умножение: {complex1 * complex2}");
+
+            // Деление комплексных чисел
+            Console.WriteLine($"Деление: {complex1 / complex2}");
+
+            // Изменение знака комплексного числа
+            Console.WriteLine($"Изменение знака: {-complex1}");
+
+            // Инкремент комплексного числа
+            Console.WriteLine($"Инкремент: {++complex1}");
+
+            // Декремент комплексного числа
+            Console.WriteLine($"Декремент: {--complex1}");
+
+            // Получение модуля комплексного числа
+            Console.WriteLine($"Модуль комплексного числа: {complex1.GetMagnitude()}");
+
+            // Получение действительной части комплексного числа
+            Console.WriteLine($"Действительная часть: {complex1["Re"]}");
+
+            // Получение мнимой части комплексного числа
+            Console.WriteLine($"Мнимая часть: {complex1["Im"]}");
+
+            // Сравнение комплексных чисел
+            Console.WriteLine($"Равны ли комплексное число 1 и комплексное число 2? {complex1.Equals(complex2)}");
+        }
+    }
+
+
     /*Дробь.
     Реализовать класс Fraction для работы с обыкновенными дробями. 
     Реализовать методы операций:
@@ -22,6 +109,7 @@ namespace C_Practica
         private int denominator = 0;
 
         // конструкторы
+
         public Fraction() { }
         public Fraction(int numerator, int denominator)
         {
@@ -29,8 +117,8 @@ namespace C_Practica
             this.denominator = denominator;
         }
 
-        // Add - сложениe двух дробей
-        public Fraction Add(Fraction f1, Fraction fr2)
+        //сложениe двух дробей
+        public static Fraction operator +(Fraction f1, Fraction fr2)
         {
             int newNumerator = f1.numerator * fr2.denominator + fr2.numerator * f1.denominator;
             int newDenominator = f1.denominator * fr2.denominator;
@@ -38,7 +126,7 @@ namespace C_Practica
         }
 
         // Subtract - Вычитаниe двух дробей
-        public Fraction Subtract(Fraction f1, Fraction f2)
+        public static Fraction operator -(Fraction f1, Fraction f2)
         {
             int newNumerator = f1.numerator * f2.denominator - f2.numerator * f1.denominator;
             int newDenominator = f1.denominator * f2.denominator;
@@ -145,48 +233,151 @@ namespace C_Practica
 
     }
 
-    class Program
+
+
+    /*Комплексное число.
+        Реализовать класс Complex для работы с комплексными числами. 
+        Реализовать методы операций:
+        	сложения, вычитания, умножения, деления двух комплексных чисел
+        	перегрузить эти методы для комплексного числа и действительного числа (double)
+        	изменение знака комплексного числа
+        	инкремент/декремент
+        	получение модуля комплексного числа
+        	Equals, GetHashCode, CompareTo
+        	получение действительной части по индексу “Re”, получение мнимой части по индексу “Im”
+        */
+
+    internal class Complex
     {
-        static void Main(string[] args)
+        // Автосвойства для комплексных чисел
+        public double Real { get; set; }      // Действительная часть
+        public double Imaginary { get; set; } // Мнимая часть
+
+        // Конструкторы
+        public Complex(double real, double imaginary)
         {
-            Fraction fraction1 = new Fraction(1, 2);
-            Fraction fraction2 = new Fraction(3, 4);
+            Real = real;
+            Imaginary = imaginary;
+        }
 
-            Console.WriteLine($"Дробь 1: {fraction1}");
-            Console.WriteLine($"Дробь 2: {fraction2}");
+        public Complex(double value)
+        {
+            Real = value;
+            Imaginary = 0;
+        }
 
-            // Сложение дробей
-            Console.WriteLine($"сумма: {fraction1.Add(fraction1, fraction2)}");
+        public Complex()
+        {
+            Real = 0;
+            Imaginary = 0;
+        }
 
-            // Вычитание дробей
-            Console.WriteLine($"Вычитание: {fraction1.Subtract(fraction1, fraction2)}");
+        // Перегрузка оператора сложения для комплексных чисел
+        public static Complex operator +(Complex c1, Complex c2)
+        {
+            return new Complex(c1.Real + c2.Real, c1.Imaginary + c2.Imaginary);
+        }
 
-            // Деление дробей
-            Console.WriteLine($"Деление: {fraction1 / fraction2}");
+        // Перегрузка оператора вычитания для комплексных чисел
+        public static Complex operator -(Complex c1, Complex c2)
+        {
+            return new Complex(c1.Real - c2.Real, c1.Imaginary - c2.Imaginary);
+        }
 
-            // Умножение дробей
-            Console.WriteLine($"Умножение: {fraction1 * fraction2}");
+        // Перегрузка оператора умножения для комплексных чисел
+        public static Complex operator *(Complex c1, Complex c2)
+        {
+            return new Complex(c1.Real * c2.Real - c1.Imaginary * c2.Imaginary,
+                               c1.Real * c2.Imaginary + c1.Imaginary * c2.Real);
+        }
 
-            // Инкремент дроби
-            Console.WriteLine($"Инкремент: {fraction1++}");
+        // Перегрузка оператора деления для комплексных чисел
+        public static Complex operator /(Complex c1, Complex c2)
+        {
+            double denominator = c2.Real * c2.Real + c2.Imaginary * c2.Imaginary;
+            double realPart = (c1.Real * c2.Real + c1.Imaginary * c2.Imaginary) / denominator;
+            double imaginaryPart = (c1.Imaginary * c2.Real - c1.Real * c2.Imaginary) / denominator;
+            return new Complex(realPart, imaginaryPart);
+        }
 
-            // Декремент дроби
-            Console.WriteLine($"Декремент дроби: {fraction1--}");
+        // Перегрузка оператора изменения знака для комплексных чисел
+        public static Complex operator -(Complex c)
+        {
+            return new Complex(-c.Real, -c.Imaginary);
+        }
 
-            // Изменение знака дроби
-            Console.WriteLine($"Изменение знака дроби 1: {-fraction1}");
+        // Перегрузка оператора инкремента для комплексных чисел
+        public static Complex operator ++(Complex c)
+        {
+            return new Complex(c.Real + 1, c.Imaginary);
+        }
 
-            // Получение целой части дроби
-            Console.WriteLine($"Целая часть : {Fraction.GetWholePart(fraction1)}");
+        // Перегрузка оператора декремента для комплексных чисел
+        public static Complex operator --(Complex c)
+        {
+            return new Complex(c.Real - 1, c.Imaginary);
+        }
 
-            // Получение числителя и знаменателя по индексу
-            Console.WriteLine($"числитель дроби 1: {fraction1[0]}");
-            Console.WriteLine($"знаменатель дроби 2: {fraction1[1]}");
+        // Метод получения модуля комплексного числа
+        public double GetMagnitude()
+        {
+            return Math.Sqrt(Real * Real + Imaginary * Imaginary);
+        }
 
-            // Сравнение дробей
-            Console.WriteLine($"Равны ли дробь 1 и дробь 2? {fraction1.Equals(fraction2)}");
+        // Перегрузка метода Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Complex))
+                return false;
+
+            Complex other = (Complex)obj;
+            return Real == other.Real && Imaginary == other.Imaginary;
+        }
+
+        // Перегрузка метода GetHashCode
+        public override int GetHashCode()
+        {
+            return Real.GetHashCode() ^ Imaginary.GetHashCode();
+        }
+
+        // Перегрузка метода CompareTo
+        public int CompareTo(Complex other)
+        {
+            double thisMagnitude = this.GetMagnitude();
+            double otherMagnitude = other.GetMagnitude();
+
+            if (thisMagnitude < otherMagnitude)
+                return -1;
+            else if (thisMagnitude > otherMagnitude)
+                return 1;
+            else
+                return 0;
+        }
+
+        // Индексатор для получения действительной и мнимой части
+        public double this[string part]
+        {
+            get
+            {
+                if (part == "Re")
+                    return Real;
+                else if (part == "Im")
+                    return Imaginary;
+                else
+                    throw new ArgumentException("Неверное наименование части. Используйте \"Re\" для действительной части или \"Im\" для мнимой части.");
+            }
+        }
+
+        // Перегрузка метода ToString для красивого вывода комплексного числа
+        public override string ToString()
+        {
+            if (Imaginary >= 0)
+                return $"{Real} + {Imaginary}i";
+            else
+                return $"{Real} - {-Imaginary}i";
         }
     }
 }
+
 
 
